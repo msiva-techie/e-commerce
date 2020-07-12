@@ -77,14 +77,14 @@ const Card = ({ product }) => {
 				<Link
 					to={`/user/cart`}
 					onClick={pushToCart}
-					className="btn btn-warning btn-block mb-2"
+					className="btn btn-success btn-block mb-2"
 				>
 					Buy now
 				</Link>
 				{addToCartButton && (
 					<button
 						// to="/user/dashboard"
-						className="btn btn-success btn-block mb-2"
+						className="btn btn-warning btn-block mb-2"
 						onClick={pushToCart}
 					>
 						Add to cart

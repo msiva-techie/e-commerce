@@ -72,13 +72,13 @@ const Product = ({ match: { params } }) => {
 						<Link
 							to="/user/cart"
 							onClick={pushToCart}
-							className="btn btn-warning btn-block"
+							className="btn btn-success btn-block"
 						>
 							BUY NOW
 						</Link>
 						{addToCartButton && (
 							<button
-								className="btn btn-success btn-block"
+								className="btn btn-warning btn-block"
 								onClick={pushToCart}
 							>
 								ADD TO CART
