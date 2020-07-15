@@ -17,7 +17,7 @@ const Menu = ({ history }) => {
 					Home
 				</Link>
 			</li>
-			{isAuthenticated()?.user?.role === 0 && (
+			{/* {isAuthenticated()?.user?.role === 0 && (
 				<li className="nav-item">
 					<Link
 						style={setCurrentTab("/user/dashboard")}
@@ -27,7 +27,7 @@ const Menu = ({ history }) => {
 						Dashboard
 					</Link>
 				</li>
-			)}
+			)} */}
 			{isAuthenticated()?.user?.role === 1 && (
 				<li className="nav-item">
 					<Link

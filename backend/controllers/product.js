@@ -1,6 +1,7 @@
 const Product = require("./../models/product");
 const { IncomingForm } = require("formidable");
 const fs = require("fs");
+const product = require("./../models/product");
 
 exports.createProduct = (req, res) => {
 	const form = new IncomingForm({
@@ -40,6 +41,7 @@ exports.createProduct = (req, res) => {
 		}
 		new Product(ipObj).save((err, product) => {
 			if (err) {
+				console.log(err);
 				return res.status(400).json({
 					error: "unable to create product"
 				});
@@ -106,7 +108,6 @@ exports.getPhoto = (req, res) => {
 		res.set("Content-Type", req.product.photo.contentType);
 		return res.send(req.product.photo.data);
 	}
-	next();
 };
 
 exports.getProductById = (req, res, next, id) => {
@@ -152,26 +153,32 @@ exports.getAllUniqueCategories = (req, res) => {
 	});
 };
 
-exports.updateStockAndSold = (req, res, next) => {
+exports.updateStockAndSold = (req, res, next, refund = () => {}) => {
 	let myOperations = req.body.order.products.map(product => {
+		let count = product.count ? parseInt(product.count, 10) : 1;
+
 		return {
 			updateOne: {
-				filter: { _id: product._id },
+				filter: { _id: product._id, stock: { $gte: count } },
 				update: {
 					$inc: {
-						stock: -product.quantity,
-						sold: +product.quantity
+						stock: -count,
+						sold: +count
 					}
 				}
 			}
 		};
 	});
-	Product.bulkWrite(myOperations, {}, (err, products) => {
-		if (err) {
+
+	Product.bulkWrite(myOperations, {}, (err, result) => {
+		if (err || result.modifiedCount !== req.body.order.products.length) {
+			console.log(err);
+			refund();
 			return res.status(400).json({
 				error: "Updating stock and sold failed"
 			});
 		}
+		console.log({ result });
 		next();
 	});
 };

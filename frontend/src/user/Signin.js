@@ -109,7 +109,7 @@ const Signin = () => {
 				return <Redirect to="/admin/dashboard" />;
 			} else {
 				// redirect to user
-				return <Redirect to="/user/dashboard" />;
+				return <Redirect to="/" />;
 			}
 		}
 		if (userobj) {

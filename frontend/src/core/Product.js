@@ -60,13 +60,33 @@ const Product = ({ match: { params } }) => {
 				<div className="col-6">
 					<ImageWithMagnifier productId={product._id} />
 				</div>
-				<div className="col-6">
+				<div className="col">
 					<p className="display-4">{product?.name}</p>
-					<h1>
-						<p className="badge badge-primary">
-							{product?.price} <i className="fa fa-inr"></i>
-						</p>
-					</h1>
+					<div className="row">
+						<div className="col-4">
+							<h1>
+								<p className="badge badge-primary">
+									{product?.price} <i className="fa fa-inr"></i>
+								</p>
+							</h1>
+						</div>
+						<div className="col">
+							{product.stock <= 0 ? (
+								<h3>
+									<p className="badge badge-danger">
+										CURRENTLY NO STOCK AVAILABLE
+									</p>
+								</h3>
+							) : (
+								<h2>
+									<p className="badge badge-primary">
+										Available Stock: {product?.stock}
+									</p>
+								</h2>
+							)}
+						</div>
+					</div>
+
 					<p className="lead">{product?.description}</p>
 					<div className="button-container">
 						<Link

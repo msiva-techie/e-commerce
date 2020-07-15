@@ -40,17 +40,17 @@ exports.getUserPurchaseList = (req, res) => {
 
 // middlewares
 
-exports.pushOrderInPurchaseList = (req, res, next) => {
+exports.pushOrderInPurchaseList = (req, res, next, refund = () => {}) => {
 	let purchases = [];
 	req.body.order.products.forEach(product => {
-		const { _id, name, description, price, category, quantity } = product;
+		const { _id, name, description, price, category, count } = product;
 		purchases.push({
 			_id,
 			name,
 			description,
 			price,
 			category,
-			quantity,
+			count,
 			amount: req.body.order.amount,
 			transactionId: req.body.order.transactionId
 		});
@@ -68,6 +68,8 @@ exports.pushOrderInPurchaseList = (req, res, next) => {
 		}
 	).exec((err, user) => {
 		if (err || !user) {
+			console.log(err.toString());
+			refund();
 			return res.status(400).json({ error: "failed to update purchases" });
 		}
 		return next();

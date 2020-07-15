@@ -6,7 +6,8 @@ const productSchema = new mongoose.Schema(
 			type: String,
 			maxlength: 32,
 			required: true,
-			trim: true
+			trim: true,
+			unique: true
 		},
 		description: {
 			type: String,
@@ -22,10 +23,13 @@ const productSchema = new mongoose.Schema(
 		},
 		stock: {
 			type: Number,
-			required: true
+			required: true,
+			min: 0,
+			default: 0
 		},
 		sold: {
 			type: Number,
+			min: 0,
 			default: 0
 		},
 		photo: {

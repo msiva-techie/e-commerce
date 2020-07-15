@@ -24,6 +24,23 @@ export const getProduct = productId => {
 		.catch(console.error);
 };
 
+export const makePaymentByStripe = (stripeToken, products, token, userId) => {
+	return fetch(`${config.API}/payment/stripe/${userId}`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`
+		},
+		body: JSON.stringify({
+			token: stripeToken,
+			products
+		})
+	})
+		.then(res => res.json())
+		.catch(console.error);
+};
+
 export const getProductPhoto = productId => {
 	return fetch(`${config.API}/product/${productId}/photo`, {
 		method: "GET"

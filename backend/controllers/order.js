@@ -16,15 +16,20 @@ exports.getOrderById = (req, res, next, id) => {
 		});
 };
 
-exports.createOrder = (req, res) => {
+exports.createOrder = (req, res, refund = () => {}) => {
 	req.body.order.user = req.profile._id;
 	new Order(req.body.order).save((err, order) => {
 		if (err) {
+			console.log(err.toString());
+			refund();
 			return res.status(400).json({
 				error: "unable to save the order"
 			});
 		}
-		return res.json(order);
+		return res.json({
+			success: req.body.success,
+			order
+		});
 	});
 };
 

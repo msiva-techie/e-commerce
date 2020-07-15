@@ -30,3 +30,10 @@ export const removeFromCart = (product, next) => {
 	}
 	return cart;
 };
+
+export const emptyCart = next => {
+	if (typeof window !== "undefined") {
+		localStorage.setItem("cart", JSON.stringify([]));
+		next();
+	}
+};
