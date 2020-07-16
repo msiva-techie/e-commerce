@@ -27,8 +27,8 @@ const Routes = () => {
 				{/* User Routes */}
 
 				<PrivateRoute exact path="/user/dashboard" component={UserDashboard} />
-				<PrivateRoute exact path="/user/cart" component={Cart} />
-				<PrivateRoute exact path="/product/:productId" component={Product} />
+				<Route exact path="/user/cart" component={Cart} />
+				<Route exact path="/product/:productId" component={Product} />
 
 				{/* Admin Routes */}
 

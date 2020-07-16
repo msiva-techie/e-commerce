@@ -6,6 +6,7 @@ import emptycart from "./../emptycart.jpg";
 import { Link } from "react-router-dom";
 import PaymentByStripe from "./PaymentByStripe";
 import Loader from "react-loader-spinner";
+import { isAuthenticated } from "../auth/helper";
 
 const Cart = () => {
 	const [products, setProducts] = useState([]);
@@ -114,11 +115,17 @@ const Cart = () => {
 								{getAmount()} <i className="fa fa-inr"></i>
 							</span>
 						</h3>
-						<PaymentByStripe
-							products={products}
-							values={values}
-							setValues={setValues}
-						/>
+						{isAuthenticated() ? (
+							<PaymentByStripe
+								products={products}
+								values={values}
+								setValues={setValues}
+							/>
+						) : (
+							<Link to="/signin" className="btn btn-success btn-block">
+								Sign In to place an order
+							</Link>
+						)}
 					</div>
 				</div>
 			)}
