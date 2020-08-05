@@ -1,0 +1,29 @@
+version: "3"
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: e-commerce_app_img
+    container_name: e-commerce_app
+    env_file:
+      - .env
+    # volumes:
+    #   - ./backend:/var/app/
+    #   - /var/app/node_modules
+    ports:
+      - 7000:7000
+    depends_on:
+      - mongo
+    restart: always
+    stdin_open: true
+
+  mongo:
+    image: mongo
+    container_name: e-commerce_mongo
+    volumes:
+      - ./mongo:/data
+    command: mongod --port 27000
+    expose:
+      - 27000
+    restart: always

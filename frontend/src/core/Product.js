@@ -20,12 +20,13 @@ const Product = ({ match: { params } }) => {
 				setProduct(res);
 				let cart = JSON.parse(localStorage.getItem("cart"));
 				console.log({ cart });
-				cart.forEach(item => {
-					if (item._id === params.productId) {
-						setAddToCartButton(false);
-						setRemoveFromCartButton(true);
-					}
-				});
+				cart &&
+					cart.forEach(item => {
+						if (item._id === params.productId) {
+							setAddToCartButton(false);
+							setRemoveFromCartButton(true);
+						}
+					});
 			}
 		});
 	}, []);

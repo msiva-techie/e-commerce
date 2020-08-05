@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile.dev
+    image: e-commerce_server_img
+    container_name: eCommerceServer
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/var/app
+      - /var/app/node_modules
+    ports:
+      - "7000:7000"
+    depends_on:
+      - mongo
+    restart: always
+
+  client:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile.dev
+    image: e-commerce_client_img
+    container_name: eCommerceClient
+    stdin_open: true
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/var/app
+      - /var/app/node_modules
+    # environment:
+    #   - REACT_APP_BACKEND=http://server:7000/api
+    ports:
+      - "3000:3000"
+    restart: always
+
+  mongo:
+    image: mongo
+    container_name: eCommerceMongo
+    command: mongod --port 27000
+    expose:
+      - 27000
+    restart: always
+    volumes:
+      - ./mongo:/data

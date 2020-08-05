@@ -10,12 +10,13 @@ const Card = ({ product }) => {
 
 	useEffect(() => {
 		let cart = JSON.parse(localStorage.getItem("cart"));
-		cart.forEach(item => {
-			if (item._id === product._id) {
-				setAddToCartButton(false);
-				setRemoveFromCartButton(true);
-			}
-		});
+		cart &&
+			cart.forEach(item => {
+				if (item._id === product._id) {
+					setAddToCartButton(false);
+					setRemoveFromCartButton(true);
+				}
+			});
 	}, []);
 
 	const pushToCart = () => {
